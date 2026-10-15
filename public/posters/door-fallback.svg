@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1280" fill="none">
+  <defs>
+    <linearGradient id="door" x1="530" x2="1050" y1="155" y2="1110" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1d4b69"/>
+      <stop offset="1" stop-color="#071e31"/>
+    </linearGradient>
+    <linearGradient id="edge" x1="1030" x2="1110" y1="130" y2="1120" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#9cc8e8" stop-opacity=".82"/>
+      <stop offset="1" stop-color="#5d9ec7" stop-opacity=".12"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientTransform="matrix(500 540 -560 520 880 500)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6fb6ff" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#6fb6ff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blur" width="1.6" height="1.6" x="-.3" y="-.3" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="48"/>
+    </filter>
+  </defs>
+  <ellipse cx="870" cy="560" fill="url(#glow)" rx="390" ry="480"/>
+  <ellipse cx="890" cy="1030" fill="#020b13" opacity=".58" filter="url(#blur)" rx="390" ry="70"/>
+  <path d="M374 140 962 102l148 88v930l-148 73-588-36V140Z" fill="#061421" stroke="#365b74" stroke-width="4"/>
+  <path d="m425 180 519-31 114 66v858l-114 54-519-29V180Z" fill="url(#door)" stroke="url(#edge)" stroke-width="5"/>
+  <path d="m492 247 383-24 88 46v197l-88 26-383-12V247Z" fill="#0d2a40" stroke="#527995" stroke-opacity=".72" stroke-width="3"/>
+  <path d="m492 529 383 10 88-23v201l-88 13-383-2V529Z" fill="#0b263b" stroke="#527995" stroke-opacity=".62" stroke-width="3"/>
+  <path d="m492 813 383-1 88-12v188l-88 36-383-19V813Z" fill="#091f32" stroke="#527995" stroke-opacity=".58" stroke-width="3"/>
+  <path d="m1001 241 31-18v804l-31 18V241Z" fill="#b8c8d4" fill-opacity=".14"/>
+  <circle cx="934" cy="678" r="13" fill="#d8e2e8"/>
+  <path d="M934 690v83" stroke="#d8e2e8" stroke-linecap="round" stroke-width="7"/>
+  <path d="m359 1047 642 43 109-52" stroke="#6fb6ff" stroke-opacity=".28" stroke-width="2"/>
+</svg>
