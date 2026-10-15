@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { ArrowDown, ArrowUpRight, CircleHelp, Shield } from "lucide-react";
+import { ArrowDown, ArrowUpRight, CircleHelp, Mail, Phone } from "lucide-react";
 import { HeroSection } from "@/components/sections/hero-section";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { projects, services } from "@/lib/content";
-import { getWhatsAppUrl } from "@/lib/config";
+import { getEmailUrl, getPhoneUrl, getWhatsAppUrl, siteConfig } from "@/lib/config";
 
 const processSteps = [
   {
@@ -25,6 +25,8 @@ const processSteps = [
 
 export default function HomePage() {
   const whatsappUrl = getWhatsAppUrl("Hola, quiero hacer una consulta a BunkerLock");
+  const phoneUrl = getPhoneUrl();
+  const emailUrl = getEmailUrl();
 
   return (
     <main id="contenido">
@@ -60,11 +62,61 @@ export default function HomePage() {
         <div className="container why-layout">
           <div className="why-visual" aria-hidden="true">
             <div className="why-visual__halo" />
-            <div className="why-visual__shield">
-              <Shield size={74} strokeWidth={1.1} />
-              <span className="why-visual__line" />
-            </div>
-            <span className="why-visual__caption">BunkerLock · puertas y herrería</span>
+            <svg className="why-visual__scene" viewBox="0 0 440 320" fill="none">
+              <defs>
+                <radialGradient id="welding-glow">
+                  <stop stopColor="#fff8d7" />
+                  <stop offset="0.38" stopColor="#f5c76a" stopOpacity="0.95" />
+                  <stop offset="1" stopColor="#f5c76a" stopOpacity="0" />
+                </radialGradient>
+                <linearGradient id="gate-metal" x1="264" y1="80" x2="405" y2="240">
+                  <stop stopColor="#9ab5c7" />
+                  <stop offset="1" stopColor="#45657d" />
+                </linearGradient>
+              </defs>
+
+              <path d="M38 254H414" stroke="#49677d" strokeWidth="3" />
+              <path d="M70 254v28m300-28v28" stroke="#49677d" strokeWidth="4" />
+
+              <g stroke="url(#gate-metal)" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M264 72h138v168H264z" strokeWidth="5" />
+                <path d="M298 75v162m35-162v162m35-162v162M267 112h132m-132 42h132m-132 42h132" strokeWidth="3" />
+                <path d="M264 240h138" strokeWidth="5" />
+              </g>
+              <path d="M285 82v146m35-146v146m35-146v146m35-146v146" stroke="#d1e0e9" strokeOpacity="0.22" />
+
+              <path
+                d="M118 139c-18 3-30 12-39 29l-23 59 20 8 25-45-8 62h91l-12-67 23 40 19-11-31-58c-8-13-20-21-39-22z"
+                fill="#18364d"
+                stroke="#91aabd"
+                strokeWidth="3"
+                strokeLinejoin="round"
+              />
+              <path d="m83 173-19 49m98-47 20 42" stroke="#b4c9d7" strokeWidth="8" strokeLinecap="round" />
+              <path d="M95 97c0-27 15-43 39-43s39 17 39 42v30l-17 21h-47l-14-21z" fill="#24445c" stroke="#a9c0cf" strokeWidth="3" />
+              <path d="M99 91h76v24h-76z" fill="#0a1d2d" stroke="#a9c0cf" strokeWidth="3" />
+              <path d="M111 98h48v11h-48z" fill="#9cc8e3" fillOpacity="0.78" />
+              <path d="m151 143 10 12" stroke="#a9c0cf" strokeWidth="3" strokeLinecap="round" />
+
+              <path d="m183 188 57 5" stroke="#c7d6df" strokeWidth="10" strokeLinecap="round" />
+              <path d="m229 190 35 4-8 10-30-4z" fill="#dce6ec" stroke="#526f84" strokeWidth="2" strokeLinejoin="round" />
+              <path d="m254 195 10-1" stroke="#f6d783" strokeWidth="4" strokeLinecap="round" />
+
+              <circle className="welding-scene__arc-glow" cx="264" cy="194" r="30" fill="url(#welding-glow)" />
+              <path className="welding-scene__arc" d="m259 187 8 6-5 4 7 5-10 2 2-7-8-3z" fill="#fff8d7" />
+              <g className="welding-scene__sparks" stroke="#f6d783" strokeLinecap="round" strokeWidth="2.5">
+                <path d="m264 192 13-15m-11 18 20-3m-23 7 13 12m-16-17-12-12m13 16-18 2" />
+                <circle cx="281" cy="188" r="2" fill="#fff8d7" stroke="none" />
+                <circle cx="246" cy="178" r="1.8" fill="#fff8d7" stroke="none" />
+                <circle cx="277" cy="210" r="1.7" fill="#fff8d7" stroke="none" />
+              </g>
+              <g className="welding-scene__sparks welding-scene__sparks--delayed" stroke="#9cc8ff" strokeLinecap="round" strokeWidth="2">
+                <path d="m264 192 4-20m-5 24 16 10m-17-14-16-7" />
+                <circle cx="269" cy="172" r="1.6" fill="#d9edff" stroke="none" />
+                <circle cx="282" cy="207" r="1.5" fill="#d9edff" stroke="none" />
+              </g>
+            </svg>
+            <span className="why-visual__caption">Herrería a medida · hecho para tu espacio</span>
           </div>
           <div className="why-copy">
             <p className="eyebrow eyebrow--light">Una conversación clara</p>
@@ -144,8 +196,8 @@ export default function HomePage() {
             <p className="eyebrow eyebrow--light">Contacto</p>
             <h2 id="contact-title">Contanos qué necesitás.</h2>
             <p>
-              Completá los canales oficiales de contacto para activar WhatsApp y llamada.
-              El formulario se incorpora en la siguiente fase.
+              Escribinos por WhatsApp o email, o llamanos. El formulario de contacto se
+              incorpora en la siguiente fase.
             </p>
             {whatsappUrl ? (
               <a
@@ -157,8 +209,22 @@ export default function HomePage() {
                 Escribinos por WhatsApp <ArrowUpRight aria-hidden="true" size={18} />
               </a>
             ) : (
-              <span className="contact-pending">TODO(cliente): falta confirmar WhatsApp y teléfono.</span>
+              <span className="contact-pending">Escribinos por email o llamanos.</span>
             )}
+            <div className="contact-details" aria-label="Datos de contacto">
+              {phoneUrl ? (
+                <a href={phoneUrl}>
+                  <Phone aria-hidden="true" size={17} />
+                  <span>{siteConfig.phoneDisplay}</span>
+                </a>
+              ) : null}
+              {emailUrl ? (
+                <a href={emailUrl}>
+                  <Mail aria-hidden="true" size={17} />
+                  <span>{siteConfig.email}</span>
+                </a>
+              ) : null}
+            </div>
           </div>
           <div className="contact-mark" aria-hidden="true">
             <CircleHelp size={34} strokeWidth={1.2} />

@@ -44,9 +44,9 @@ Particulares (casas y departamentos), constructoras y arquitectos, comercios y e
 
 ### 2.1 Assets entregados (inventario actualizado)
 
-El cliente entregó **1 logo y 5 fotos**, disponibles en `public/`. Se revisaron visualmente los seis archivos.
+El cliente entregó **1 logo y 6 fotos**, disponibles en `public/`. Se revisaron visualmente los siete archivos.
 
-**Logo** — `public/brand/bunkerlock-logo.jpeg`, 1024×1024, JPEG con fondo blanco opaco. Muestra un escudo azul marino con remaches y filete interior, un símbolo central plateado y el wordmark “BunkerLock”. Se usa en el encabezado y el pie con un recorte CSS decorativo del escudo; el texto del sitio conserva el nombre legible. No se vectorizó ni se alteró el original.
+**Logo** — `public/brand/bunkerlock-logo.jpeg`, 1024×1024, JPEG original con fondo blanco opaco. Muestra un escudo azul marino con remaches y filete interior, un símbolo central plateado y el wordmark “BunkerLock”. Para el sitio se generó `public/brand/bunkerlock-logo-transparent.png`, conservando el JPEG original sin cambios; el encabezado y el pie usan un recorte CSS del escudo y el texto del sitio mantiene el nombre legible. No se vectorizó.
 - `TODO(cliente)`: pedir SVG vectorial, fondo transparente y versión solo escudo para favicon y escena 3D.
 - `TODO(cliente)`: confirmar el significado del símbolo central; no explicarlo ni destacarlo en el copy.
 
@@ -59,32 +59,35 @@ El cliente entregó **1 logo y 5 fotos**, disponibles en `public/`. Se revisaron
 | `foto3.jpeg` | `public/photos/03-puerta-blanca-rejas.jpeg` | 1200×1600 | Puerta blanca con laterales de rejas ornamentales. |
 | `foto4.jpeg` | `public/photos/04-puerta-madera-laterales.jpeg` | 1200×1600 | Puerta central de tono madera con laterales vidriados y marcos blancos. |
 | `foto5.jpeg` | `public/photos/05-puerta-blanca-interior-abierta.jpeg` | 2448×3264 | Puerta blanca de dos paneles, abierta, vista desde el interior. |
+| `foto6.jpeg` | `public/photos/foto6.jpeg` | 720×960 | Portón oscuro de paneles horizontales con una puerta peatonal integrada. |
 
-Las cinco fotos son verticales 3:4. La galería las presenta con recorte 4:5 mediante `next/image`; los originales pesan entre 139 y 181 KB. Las fotos 03 y 04 muestran vehículos y calle al fondo. No se distinguen patentes en la revisión visual; comprobarlas otra vez en el Preview de Vercel antes de publicar.
+Las seis fotos son verticales 3:4. La galería las presenta con recorte 4:5 mediante `next/image`; los originales pesan entre 66 y 181 KB. Las fotos 03 y 04 muestran vehículos y calle al fondo. No se distinguen patentes en la revisión visual; comprobarlas otra vez en el Preview de Vercel antes de publicar.
 
 **Decisiones de uso:**
-1. Las fotos quedan en la galería; el hero mantiene su poster estático porque ninguna foto entregada es horizontal.
+1. Las fotos quedan en la galería; el hero mantiene su poster ilustrado con movimiento CSS sutil porque ninguna foto entregada es horizontal. La animación respeta `prefers-reduced-motion`.
 2. No se afirma que las puertas sean blindadas, ni se atribuyen materiales, fabricación propia o características de cerradura.
 3. El texto alternativo describe únicamente lo visible en cada fotografía.
-4. El logo JPEG mantiene su fondo blanco; para una versión transparente o un favicon se necesita el SVG/escudo que el cliente aún debe entregar.
+4. El JPEG original del logo se conserva sin cambios; el sitio usa la versión PNG con fondo transparente. Para un favicon vectorial o una escena 3D se necesita el SVG/escudo que el cliente aún debe entregar.
 
 **Ubicación de assets:**
 
 ```text
 public/
 ├─ brand/
-│  └─ bunkerlock-logo.jpeg
+│  ├─ bunkerlock-logo.jpeg
+│  └─ bunkerlock-logo-transparent.png
 ├─ photos/
 │  ├─ 01-puerta-blanca-interior.jpeg
 │  ├─ 02-puerta-madera-detalle.jpeg
 │  ├─ 03-puerta-blanca-rejas.jpeg
 │  ├─ 04-puerta-madera-laterales.jpeg
-│  └─ 05-puerta-blanca-interior-abierta.jpeg
+│  ├─ 05-puerta-blanca-interior-abierta.jpeg
+│  └─ foto6.jpeg
 └─ posters/
    └─ door-fallback.svg
 ```
 
-> **Verificación de Fase 0 (15-10-2026):** el logo y las cinco fotos están presentes en `public/`. La galería y las ubicaciones se actualizaron; siguen pendientes la versión vectorial de marca, las confirmaciones de producto y los datos comerciales reales.
+> **Verificación de Fase 0 (15-10-2026):** el logo y las seis fotos están presentes en `public/`. La galería y las ubicaciones se actualizaron; siguen pendientes la versión vectorial de marca, las confirmaciones de producto y los datos comerciales reales.
 
 ### 2.2 Tono y voz
 - **Personalidad:** robusta, confiable, cercana, profesional. Industria argentina, trabajo bien hecho.
@@ -245,7 +248,7 @@ Una sola ruta `/`. Cada sección con `id` para anclas, un solo `h1` en todo el d
 - **QA:** parámetro `?no3d=1` para forzar el fallback y `?debug3d` (solo en dev) para estadísticas.
 
 #### 4.1.4 Gating y fallbacks (obligatorio)
-Se muestra el **poster estático** (render de la escena exportado a AVIF/WebP, candidato a LCP) con una animación CSS suave cuando ocurra cualquiera de estas:
+Se mantiene visible el **poster de fallback** (candidato a LCP); su movimiento CSS suave se desactiva con `prefers-reduced-motion`. El canvas no se carga cuando ocurre cualquiera de estas condiciones:
 - Sin WebGL, error de inicialización o `webglcontextlost`.
 - `prefers-reduced-motion: reduce` o `Save-Data` activo.
 - Dispositivo de gama baja (`deviceMemory` ≤ 2, `hardwareConcurrency` bajo o GPU tier 0–1 si se usa `detect-gpu`) o FPS sostenido bajo en los primeros segundos.
@@ -293,7 +296,7 @@ type ContactRequest = {
 
 ## 6. WhatsApp
 - Botón flotante + barra inferior mobile; no tapa contenido crítico.
-- Enlace `https://wa.me/<NUMERO>?text=<mensaje-codificado>`; número desde `NEXT_PUBLIC_WHATSAPP_NUMBER` (`TODO(cliente)`).
+- Enlace `https://wa.me/<NUMERO>?text=<mensaje-codificado>`; WhatsApp configurado: `+54 9 11 2407-3143` (`NEXT_PUBLIC_WHATSAPP_NUMBER`).
 - **Mensaje prellenado contextual** (ej. desde Servicios: "Hola, quiero consultar por puertas blindadas").
 - Evento `click_whatsapp` con la sección de origen.
 
@@ -455,7 +458,8 @@ El plan **Hobby** de Vercel está pensado para uso personal/no comercial; un sit
 - [ ] Confirmar si las fotos 04 y 05 son el mismo frente (cara exterior e interior)
 - [ ] Originales sin compresión de las fotos 03, 04 y 05
 - [ ] Todas las fotos disponibles, en la mejor calidad posible, con permiso de uso
-- [ ] Teléfono, WhatsApp, email, dirección, horarios, redes sociales
+- [x] Teléfono, WhatsApp y email: `+54 9 11 2407-3143` · `bunkerlock.puertas@gmail.com`
+- [ ] Dirección, horarios y redes sociales
 - [ ] Zona de cobertura / ciudades donde instalan
 - [ ] Datos reales de confianza: años de trayectoria, garantía, plazos, fabricación propia
 - [ ] Respuestas reales para el FAQ
@@ -484,7 +488,7 @@ El plan **Hobby** de Vercel está pensado para uso personal/no comercial; un sit
 
 **Fase 0 — Fundaciones:** proyecto Next.js + TS + Tailwind v4 (+ **spike técnico de 3D**: canvas vacío cargado de forma diferida, gating, poster y medición base de rendimiento), inventario de assets, paleta desde el logo, tokens (claro/oscuro), tipografías, ESLint/Prettier, `lib/config.ts`, `.env.example`, componentes base, layout (header sticky, nav mobile, footer, barra de acción), repo conectado a Vercel con previews.
 
-**Fase 1 — Landing completa (sin 3D):** Hero con **poster estático**, confianza, servicios, por qué elegirnos, proceso, galería con lightbox, FAQ, contacto, botón flotante de WhatsApp. La página debe quedar **completa y presentable sin 3D**.
+**Fase 1 — Landing completa (sin 3D):** Hero con **poster de fallback ilustrado**, confianza, servicios, por qué elegirnos, proceso, galería con lightbox, FAQ, contacto, botón flotante de WhatsApp. La página debe quedar **completa y presentable sin 3D**.
 
 **Fase 1.5 — Experiencia 3D:** smooth scroll, scroll storytelling y escenas de 4.1 **de a una** (primero Hero, luego Cierre, Trabajos y Escudo), cada una con su fallback y medición de FPS/Lighthouse antes de pasar a la siguiente.
 

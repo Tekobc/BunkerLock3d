@@ -60,4 +60,10 @@ export const projects = [
     image: "/photos/05-puerta-blanca-interior-abierta.jpeg",
     alt: "Puerta blanca abierta de dos paneles, vista desde el interior.",
   },
+  {
+    number: "06",
+    title: "Portón de acceso",
+    image: "/photos/foto6.jpeg",
+    alt: "Portón oscuro de paneles horizontales con una puerta peatonal integrada.",
+  },
 ] as const;

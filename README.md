@@ -10,7 +10,7 @@ Landing page en Next.js App Router, TypeScript estricto y Tailwind CSS v4. La es
 ## Desarrollo local
 
 1. Copiá .env.example como .env.local.
-2. Completá los datos reales que tengas; los canales vacíos permanecen desactivados.
+2. WhatsApp, teléfono y email ya están configurados con los datos de contacto provistos. Ajustalos en `.env.local` si hace falta.
 3. Instalá dependencias con npm install.
 4. Iniciá el servidor con npm run dev.
 
@@ -19,16 +19,17 @@ Comandos disponibles: npm run lint, npm run typecheck, npm run test, npm run bui
 ## Prueba de la capa 3D
 
 - La capa se importa después de que la página carga y queda ociosa.
-- Agregá ?no3d=1 para forzar el poster estático.
+- Agregá ?no3d=1 para forzar el poster ilustrado sin WebGL.
 - Agregá ?debug3d en desarrollo para identificar el modo de prueba.
-- Se conserva el poster con movimiento reducido, Save-Data, hardware de baja capacidad o falta de WebGL.
+- El poster se conserva sin WebGL; su animación CSS se desactiva con movimiento reducido.
+- El hero tiene una animación CSS sutil e independiente de WebGL; Save-Data y hardware de baja capacidad evitan cargar el canvas.
 - El canvas actual está vacío y solo verifica la inicialización diferida de WebGL y los fallbacks; no es una escena ni una especificación de producto.
 
 ## Assets y datos pendientes
 
-El logo del cliente está en public/brand/bunkerlock-logo.jpeg y las cinco fotos en public/photos/. La galería usa fotos reales con next/image; el poster SVG sigue como ilustración geométrica provisional del hero y no es una fotografía de un trabajo realizado.
+El logo JPEG original está en public/brand/bunkerlock-logo.jpeg; el encabezado y el pie usan su versión PNG transparente en public/brand/bunkerlock-logo-transparent.png. Las seis fotos están en public/photos/, incluida foto6.jpeg (un portón). La galería usa fotos reales con next/image; el poster SVG sigue como ilustración geométrica provisional del hero y no es una fotografía de un trabajo realizado.
 
-Antes de publicar, confirmar los tipos y características de cada puerta, teléfonos, WhatsApp, email, zona, horarios, garantías, respuestas del FAQ y textos legales. La página deja los canales de contacto sin activar hasta cargar un número real.
+Antes de publicar, confirmar los tipos y características de cada puerta, la vigencia de los datos de contacto, zona, horarios, garantías, respuestas del FAQ y textos legales. El formulario todavía no está implementado.
 
 ## Vercel
 

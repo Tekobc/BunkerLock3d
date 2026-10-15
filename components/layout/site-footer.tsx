@@ -1,9 +1,10 @@
-import { ArrowUpRight, MessageCircle, Phone } from "lucide-react";
-import { getPhoneUrl, getWhatsAppUrl } from "@/lib/config";
+import { ArrowUpRight, Mail, MessageCircle, Phone } from "lucide-react";
+import { getEmailUrl, getPhoneUrl, getWhatsAppUrl, siteConfig } from "@/lib/config";
 
 export function SiteFooter() {
   const whatsappUrl = getWhatsAppUrl("Hola, quiero hacer una consulta a BunkerLock");
   const phoneUrl = getPhoneUrl();
+  const emailUrl = getEmailUrl();
 
   return (
     <footer className="site-footer">
@@ -36,7 +37,12 @@ export function SiteFooter() {
                 <Phone aria-hidden="true" size={15} /> Llamar
               </a>
             ) : null}
-            {!whatsappUrl && !phoneUrl ? (
+            {emailUrl ? (
+              <a href={emailUrl}>
+                <Mail aria-hidden="true" size={16} /> {siteConfig.email}
+              </a>
+            ) : null}
+            {!whatsappUrl && !phoneUrl && !emailUrl ? (
               <p className="site-footer__pending">
                 Datos oficiales pendientes de confirmación.
               </p>
